@@ -1,0 +1,47 @@
+{
+  "name": "resoauth/typo3-soca-plugin",
+  "description": "SOCA OIDC and CIMD frontend authentication for TYPO3",
+  "type": "typo3-cms-extension",
+  "license": "AGPL-3.0-only",
+  "require": {
+    "php": ">=8.3",
+    "ext-openssl": "*",
+    "ext-curl": "*",
+    "firebase/php-jwt": "^7.2.1",
+    "typo3/cms-core": "^13.4",
+    "typo3/cms-frontend": "^13.4",
+    "typo3/cms-backend": "^13.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "RESOAuth\\SocaTypo3\\": "Classes/",
+      "RESOAuth\\Soca\\": "lib/soca/src/",
+      "RESOAuth\\SocaHost\\": "lib/bridge/"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "soca"
+    }
+  },
+  "scripts": {
+    "test": [
+      "@php tests/run.php",
+      "@php tests/host.php",
+      "@php tests/lint.php"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    },
+    "platform": {
+      "php": "8.3.0"
+    },
+    "audit": {
+      "abandoned": "report"
+    }
+  }
+}
