@@ -1,0 +1,37 @@
+{
+  "name": "resoauth/soca-typo3-demo",
+  "description": "Disposable TYPO3 host for exercising the SOCA extension",
+  "type": "project",
+  "license": "AGPL-3.0-only",
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/plugin",
+      "options": {
+        "symlink": false,
+        "versions": {
+          "resoauth/typo3-soca-plugin": "0.1.0"
+        }
+      }
+    }
+  ],
+  "require": {
+    "resoauth/typo3-soca-plugin": "0.1.0",
+    "typo3/cms-install": "13.4.36",
+    "typo3/cms-fluid-styled-content": "13.4.36"
+  },
+  "config": {
+    "platform": {
+      "php": "8.3.0"
+    },
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "web-dir": "public"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<?php
+declare(strict_types=1);
+$config=json_decode(file_get_contents('/run/soca/config.json'),true,32,JSON_THROW_ON_ERROR);
+putenv('TYPO3_SETUP_ADMIN_PASSWORD='.trim(file_get_contents('/run/soca/admin-password')));
+$command=['php','vendor/bin/typo3','setup','--no-interaction','--driver=sqlite','--dbname=soca','--admin-username=localadmin','--admin-email=localadmin@example.invalid','--project-name=SOCA-demo','--create-site='.$config['origin'].'/','--server-type=apache'];
+$process=proc_open($command,[0=>STDIN,1=>STDOUT,2=>STDERR],$pipes);
+if(proc_close($process)!==0){exit(1);}
+$host=parse_url($config['origin'],PHP_URL_HOST);$port=parse_url($config['origin'],PHP_URL_PORT);
+$pattern='^'.preg_quote($host.($port?':'.$port:''),'~').'$';
+file_put_contents('config/system/additional.php',"<?php\n\$GLOBALS['TYPO3_CONF_VARS']['SYS']['trustedHostsPattern']=".var_export($pattern,true).";\n");

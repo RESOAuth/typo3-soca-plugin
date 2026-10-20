@@ -1,0 +1,9 @@
+<f:layout name="Module" />
+<f:section name="Content">
+<h1>SOCA frontend sign-in</h1>
+<p>All fields are locked to the deployment JSON file referenced by SOCA_CONFIG_FILE. Backend accounts keep local authentication.</p>
+<p>{message}</p><pre aria-label="Effective configuration and activation evidence">{status}</pre>
+<form method="post"><input type="hidden" name="soca_token" value="{checkToken}"/><button type="submit" class="btn btn-default">Check public documents</button></form>
+<f:if condition="{testUrl}"><form method="post" action="{testUrl}"><input type="hidden" name="soca_token" value="{testToken}"/><button type="submit" class="btn btn-default">Test candidate sign-in</button></form></f:if>
+<p>Tests preserve your backend session and do not create, link or modify accounts. Set SOCA_EMERGENCY_DISABLE=1 and restart PHP workers for emergency recovery.</p>
+</f:section>

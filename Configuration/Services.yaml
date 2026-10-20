@@ -1,0 +1,24 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+  RESOAuth\SocaTypo3\:
+    resource: '../Classes/*'
+    exclude: '../Classes/{Store.php,Authentication/VerifiedLogin.php}'
+  RESOAuth\SocaTypo3\Service:
+    public: true
+  RESOAuth\SocaTypo3\Middleware\Soca:
+    public: true
+  RESOAuth\SocaTypo3\Authentication\SocaAuthenticationService:
+    public: true
+  RESOAuth\SocaTypo3\Authentication\RequestTokenListener:
+    tags:
+      - name: event.listener
+        identifier: resoauth/soca/verified-request-token
+        event: TYPO3\CMS\Core\Authentication\Event\BeforeRequestTokenProcessedEvent
+  RESOAuth\SocaTypo3\Command\Manage:
+    tags:
+      - name: console.command
+        command: soca:manage
+        description: 'Inspect SOCA, check documents and approve identity links'
