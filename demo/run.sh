@@ -13,6 +13,15 @@ for file in config.json client.pem state.key admin-password server.crt server.ke
   MOUNTS+=(-v "$SECRETS/$file:/run/soca/$file:ro")
 done
 "$ENGINE" run -d --name "$NAME" -p "127.0.0.1:$PORT:80"   -e SOCA_CONFIG_FILE=/run/soca/config.json  "${MOUNTS[@]}" "$NAME:local"
+READY=0
+for attempt in {1..90}; do
+  if "$ENGINE" exec "$NAME" test -f /tmp/soca-app-ready; then READY=1; break; fi
+  sleep 1
+done
+if [ "$READY" != 1 ]; then
+  printf 'TYPO3 setup did not complete. Inspect the container logs.\n' >&2
+  exit 1
+fi
 printf 'Open https://%s:%s. Local account: localadmin. Password file: %s/admin-password
 ' "$HOST" "$PORT" "$SECRETS"
 printf 'Trust the generated development certificate explicitly. CA/certificate: %s/server.crt
